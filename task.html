@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var req = new XMLHttpRequest()
+        //console.log(req)
+        req.open("GET", "https://restcountries.com/v3.1/all")
+        //console.log(req)
+        req.send()
+        console.log(req)
+        req.onload = function () {
+            // console.log(req.response)
+            var data = JSON.parse(req.response)
+            console.log(data)
+
+            //task 1
+            console.log("a.Get all the countries from Asia continent /region using Filter function")
+            var dataOfAsia = data.filter((element) => element.region.includes("Asia") || element.continents.includes("Asia"))
+            //console.log(dataOfAsia)
+            var allRegionsofAsia = dataOfAsia.map((element) => element.name.common)
+            console.log(allRegionsofAsia)
+
+            //task2
+            console.log("b.Get all the countries with a population of less than 2 lakhs using Filter function")
+            var populationData = data.filter((element) => element.population < 200000).map((element) => element.name.common)
+            console.log(populationData)
+
+            // task3
+            console.log("c.Print the following details name, capital, flag, using forEach function")
+            data.forEach(function (obj) { console.log(obj.name, obj.capital, obj.flag); });
+
+            // task4
+            console.log("d.Print the total population of countries using reduce function")
+            var totalPopulation = data.reduce((acc, element) => acc + element.population, 0)
+            console.log(totalPopulation)
+
+            // task5
+            console.log(data)
+            console.log("e.Print the country that uses US dollars as currency.")
+            // var countriesWithUSD = data.map((e) => e.currencies.keys()['United States dollar'])
+            // console.log(countriesWithUSD)
+            var populationData1 = data.filter((element) => element.currencies.USD).map((element) => element.name.common)
+            console.log(populationData1)
+
+        }
+
+
+    </script>
+</body>
+
+</html>
